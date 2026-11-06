@@ -52,7 +52,7 @@ body {
   color: var(--gjt-ink);
   background-color: var(--gjt-white);
   line-height: 1.7;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -150,12 +150,20 @@ p {
 }
 
 /* 4. Navigation Bar */
+header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
 .gjt-navbar {
+  width: 100%;
   height: var(--gjt-nav-height);
   background-color: var(--gjt-white);
   border-bottom: 1px solid var(--gjt-moccasin-deep);
   transition: box-shadow 0.25s ease, height 0.25s ease;
-  z-index: 1020;
+  z-index: 1030;
 }
 
 .gjt-navbar.is-scrolled {
