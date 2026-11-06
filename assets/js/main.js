@@ -110,16 +110,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen to Bootstrap collapse events
     navbarCollapse.addEventListener('show.bs.collapse', openPopup);
+    navbarCollapse.addEventListener('shown.bs.collapse', openPopup);
     navbarCollapse.addEventListener('hide.bs.collapse', closePopup);
+    navbarCollapse.addEventListener('hidden.bs.collapse', closePopup);
 
     // Close when tapping backdrop overlay
     backdrop.addEventListener('click', () => {
       if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
         const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
         bsCollapse.hide();
-      } else {
-        closePopup();
       }
+      closePopup();
     });
 
     // Close on Escape key press

@@ -154,16 +154,18 @@ header {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 1030;
+  z-index: 1050;
+  background-color: var(--gjt-white);
 }
 
 .gjt-navbar {
+  position: relative;
   width: 100%;
   height: var(--gjt-nav-height);
   background-color: var(--gjt-white);
   border-bottom: 1px solid var(--gjt-moccasin-deep);
   transition: box-shadow 0.25s ease, height 0.25s ease;
-  z-index: 1030;
+  z-index: 1050;
 }
 
 .gjt-navbar.is-scrolled {
@@ -214,9 +216,21 @@ header {
 .navbar-toggler {
   border: 1.5px solid var(--gjt-moccasin-deep);
   border-radius: 10px;
-  padding: 0.45rem 0.65rem;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
-  background-color: transparent;
+  background-color: var(--gjt-white);
+}
+
+.navbar-toggler i {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--gjt-ink);
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .navbar-toggler:focus {
@@ -230,51 +244,59 @@ header {
   border-color: var(--gjt-teak);
 }
 
-/* Mobile Navbar Popup Styling */
+.navbar-toggler.is-active i,
+.navbar-toggler[aria-expanded="true"] i {
+  color: var(--gjt-teak);
+}
+
+/* Mobile Navbar Attached Dropdown Styling */
 @media (max-width: 991.98px) {
   .gjt-navbar {
     height: var(--gjt-nav-height-mobile);
-    z-index: 1045;
+    z-index: 1050;
   }
 
-  /* Popup Card Container */
+  /* Seamless attached dropdown panel under navbar */
   .gjt-navbar .navbar-collapse {
-    position: fixed !important;
-    top: calc(var(--gjt-nav-height-mobile) + 10px) !important;
-    left: 14px !important;
-    right: 14px !important;
-    max-width: 460px;
-    margin: 0 auto !important;
+    position: absolute !important;
+    top: var(--gjt-nav-height-mobile) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
     background-color: var(--gjt-white) !important;
-    border: 1.5px solid var(--gjt-moccasin-deep) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 20px 48px rgba(74, 44, 26, 0.22), 0 4px 16px rgba(74, 44, 26, 0.08) !important;
-    padding: 1.25rem 1.25rem 1.4rem !important;
-    z-index: 1050 !important;
-    max-height: calc(100vh - var(--gjt-nav-height-mobile) - 24px) !important;
+    border-top: 1px solid var(--gjt-moccasin-deep) !important;
+    border-bottom: 3px solid var(--gjt-teak) !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 0 20px 20px !important;
+    box-shadow: 0 20px 40px rgba(74, 44, 26, 0.2) !important;
+    padding: 1.15rem 1.25rem 1.5rem !important;
+    z-index: 1055 !important;
+    max-height: calc(100vh - var(--gjt-nav-height-mobile) - 20px) !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
 
-    /* Popup Animation State */
+    /* Dropdown Animation State */
     display: block !important;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px) scale(0.97);
+    transform: translateY(-8px);
     pointer-events: none;
-    transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.24s ease;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.25s ease;
     height: auto !important;
   }
 
   .gjt-navbar .navbar-collapse.is-open {
     opacity: 1 !important;
     visibility: visible !important;
-    transform: translateY(0) scale(1) !important;
+    transform: translateY(0);
     pointer-events: auto !important;
   }
 
-  /* Navigation Links inside Mobile Popup */
+  /* Navigation Links inside Mobile Dropdown */
   .gjt-navbar .navbar-nav {
     display: flex;
     flex-direction: column;
@@ -291,7 +313,7 @@ header {
     font-size: 1.025rem !important;
     font-weight: 600 !important;
     color: var(--gjt-ink) !important;
-    padding: 0.75rem 1rem !important;
+    padding: 0.8rem 1rem !important;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -301,11 +323,26 @@ header {
     border-left: 4px solid transparent;
   }
 
+  .gjt-navbar .navbar-nav .nav-link::after {
+    content: "›";
+    font-size: 1.35rem;
+    line-height: 1;
+    color: var(--gjt-teak);
+    opacity: 0.4;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
   .gjt-navbar .navbar-nav .nav-link:hover,
   .gjt-navbar .navbar-nav .nav-link:focus {
     background-color: var(--gjt-moccasin-soft) !important;
     color: var(--gjt-teak) !important;
     padding-left: 1.15rem !important;
+  }
+
+  .gjt-navbar .navbar-nav .nav-link:hover::after,
+  .gjt-navbar .navbar-nav .nav-link:focus::after {
+    opacity: 1;
+    transform: translateX(3px);
   }
 
   .gjt-navbar .navbar-nav .nav-link.active {
@@ -317,19 +354,29 @@ header {
     text-decoration: none !important;
   }
 
-  /* WhatsApp CTA Button Section in Popup */
+  .gjt-navbar .navbar-nav .nav-link.active::after {
+    opacity: 1;
+    color: var(--gjt-teak-dark);
+    font-weight: 700;
+  }
+
+  /* WhatsApp CTA Button Section in Mobile Dropdown */
   .gjt-navbar .navbar-collapse .d-flex {
-    border-top: 1px solid var(--gjt-moccasin);
-    padding-top: 1rem;
+    border-top: 1px solid var(--gjt-moccasin-deep);
+    padding-top: 1.15rem;
     margin-top: 0.85rem !important;
   }
 
   .gjt-navbar .navbar-collapse .btn-primary {
     width: 100%;
-    min-height: 48px;
-    border-radius: 10px;
-    font-size: 1rem;
+    min-height: 50px;
+    border-radius: 12px;
+    font-size: 1.025rem;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
     box-shadow: 0 4px 14px rgba(111, 69, 33, 0.25);
   }
 }
@@ -341,9 +388,9 @@ header {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(42, 25, 15, 0.52);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background-color: rgba(42, 25, 15, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 1040;
   opacity: 0;
   visibility: hidden;
