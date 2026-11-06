@@ -50,6 +50,27 @@ document.addEventListener('DOMContentLoaded', () => {
     handleScroll();
   }
 
+  // 3a. Back to Top Button Controller
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  if (backToTopBtn) {
+    const handleBackToTopScroll = () => {
+      if (window.scrollY > 250) {
+        backToTopBtn.classList.add('is-visible');
+      } else {
+        backToTopBtn.classList.remove('is-visible');
+      }
+    };
+    window.addEventListener('scroll', handleBackToTopScroll, { passive: true });
+    handleBackToTopScroll();
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
   // 3b. Mobile Navbar Popup Controller & Backdrop
   const navbarCollapse = document.getElementById('navbarMain');
   const navbarToggler = document.querySelector('.navbar-toggler');
